@@ -49,12 +49,15 @@ process read_qc {
       tuple val(sample_id), path(sample), path(scheme), path(reference)
 
     output:
-      tuple val(sample_id), path('*fasta*'), path(scheme), path(reference), path('*.txt')
+      tuple val(sample_id), path('*fasta*'), path(scheme), path(reference), path("${sample_id}.txt")
 
     script:
     if(sample_id == 'blank'){ sample_id = file(sample).getSimpleName()}
     """
-    # Running NanoStat to extract the median read quality and sets chopper q threshold to 90% of the median quality value
+    # Running Nanoq to get raw read statistics
+    nanoq -i ${sample} -r "raw.txt" -sv
+
+    # Running Nanoq to extract the median read quality and sets chopper q threshold to 90% of the median quality value
     q_threshold=\$(nanoq -i ${sample} -sv | grep 'Median read quality:' | awk '{ threshold = \$4 * 0.9; printf "%.1f\\n", threshold }')
 
     # Setting size filtering limits
@@ -63,10 +66,21 @@ process read_qc {
     max_chop=\$((amplicon_len + 500))
 
     if [[ ${sample} == *.fastq.gz ]]; then
-        nanoq -l "\$min_chop" -m "\$max_chop" -q "\$q_threshold" -i ${sample} -svv -r "${sample_id}.txt" -O g -o "${sample_id}.fasta.gz"
+        nanoq -l "\$min_chop" -m "\$max_chop" -q "\$q_threshold" -i ${sample} -svv -r "filtered.txt" -O g -o "${sample_id}.fasta.gz"
     else
-        nanoq -l "\$min_chop" -m "\$max_chop" -q "\$q_threshold" -i ${sample} -svv -r "${sample_id}.txt" -O u -o "${sample_id}.fasta"
+        nanoq -l "\$min_chop" -m "\$max_chop" -q "\$q_threshold" -i ${sample} -svv -r "filtered.txt" -O u -o "${sample_id}.fasta"
     fi
+
+    # stitching stats for output
+    echo "Raw read statistics" > ${sample_id}.txt
+
+    cat raw.txt >> ${sample_id}.txt
+
+    echo "Filtered read statistics" >> ${sample_id}.txt
+
+    cat filtered.txt >> ${sample_id}.txt
+
+    echo "Amplicon clipping statistics" >> ${sample_id}.txt
     """
 }
 
@@ -179,6 +193,12 @@ process ngmlr_sam {
 
     ngmlr -x ont -t ${task.cpus} --bam-fix -r ${reference} -q ${sample} | \
 
+    # Fixes NGMLR issue where it sets MAPQ value to lowest int32 value and stops ampliconclip from working since MAPQ cannot be negative
+    # Due to the way it calculates MAPQ if a value exceeds the int32 range, integer overflow occurs and results in
+    # it wrapping to the lowest value -2,147,483,648. Therefore I set the MAPQ value to 60, the highest value for NGMLR
+
+    awk -F '\t' -v OFS='\t' '!/^@/ && \$5 < 0 { \$5 = 60 } { print }' | \
+
     samtools ampliconclip -u --both-ends -f clip_stats.txt -b ${scheme} - | \
 
     samtools sort -u -O bam -@ ${task.cpus} -o ngmlr_sam.bam
@@ -220,6 +240,12 @@ process ngmlr_vc {
     # Alignment step
 
     ngmlr -x ont -t ${task.cpus} --bam-fix -r ${reference} -q ${sample} | \
+
+    # Fixes NGMLR issue where it sets MAPQ value to lowest int32 value and stops ampliconclip from working since MAPQ cannot be negative
+    # Due to the way it calculates MAPQ if a value exceeds the int32 range, integer overflow occurs and results in
+    # it wrapping to the lowest value -2,147,483,648. Therefore I set the MAPQ value to 60, the highest value for NGMLR
+
+    awk -F '\t' -v OFS='\t' '!/^@/ && \$5 < 0 { \$5 = 60 } { print }' | \
 
     samtools ampliconclip -u --both-ends -f clip_stats.txt -b ${scheme} - | \
 

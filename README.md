@@ -1,4 +1,4 @@
-<img width="528" alt="Nanopox_logo" src="https://github.com/s-mobed/Nanopox/assets/91598812/18993933-8198-46b1-9eb8-fae1fe9ac291">
+<img width="528" alt="Nanopox_logo" src="https://github.com/s-mobed/Nanopox/assets/91598812/05aeecb9-d33b-4990-8362-f0040e1b1459">
 
 
 # Nanopox

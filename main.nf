@@ -11,7 +11,7 @@ def help_message() {
     final consensus file.
 
     Usage:
-    . nextflow mpox.nf --reference reference_genome.fa --fastq ONT_reads.fastq --primer_scheme primer.scheme.bed --threads [NUM]
+    nextflow run s-mobed/Nanopox --reference reference_genome.fa --fastq ONT_reads.fastq --primer_scheme primer.scheme.bed --threads [NUM]
 
     Required Parameters:
     --reference --> Specify the reference_genome fasta file
@@ -248,7 +248,7 @@ process medaka_3 {
     cpus params.threads
 
     // Output Dir
-    publishDir "${params.med_dir}", pattern: "${file(sample).getSimpleName()}/${process}/*.fasta", mode: "copy"
+    publishDir "${params.med_dir}", pattern: "${file(sample).getSimpleName()}/${prefix}${suffix}/*.fasta", mode: "copy"
 
     // I/O
     input:

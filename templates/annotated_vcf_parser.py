@@ -19,7 +19,7 @@ name_codes = {
     "exon_variant": "EXV", "exon_loss_variant": "EXLV", "frameshift_variant": "FSV",
     "gene_variant": "GNV", "eature_ablation": "FAB", "gene_fusion": "GFS", "bidirectional_gene_fusion": "BGF",
     "rearranged_at_DNA_level": "RAD", "intergenic_region": "IRV",
-    "conserved_intergenic_variant": "CIV", "conservative_inframe_deletion": "CID",
+    "conserved_intergenic_variant": "CIV", "conservative_inframe_deletion": "CID", "conservative_inframe_insertion": "CII",
     "intragenic_variant": "ITV", "intron_variant": "INTV",
     "conserved_intron_variant": "CINTV", "miRNA": "MIR", "missense_variant": "MSV", "initiator_codon_variant": "ICV",
     "stop_retained_variant": "STOPRV", "protein_protein_contact": "PPC", "structural_interaction_variant": "SIV",

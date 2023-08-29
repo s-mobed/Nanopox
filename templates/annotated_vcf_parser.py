@@ -106,18 +106,18 @@ with open(file) as vcf:
         # Here, it'll print all the SNPEff calls present in the vcf file and change them to their acronyms
         # This legend will be printing at the beginning of the output file for reference
         for var_list, output_file in unique_vars.items():
-            output_file.write('SNPEff variant calls acronyms\n')
-            output_file.write('-----------------------------\n')
-            output_file.write('Below are all the types of variant calls present in the vcf file provided\n\n')
+            output_file.write('SNPEff variant calls acronyms\\n')
+            output_file.write('-----------------------------\\n')
+            output_file.write('Below are all the types of variant calls present in the vcf file provided\\n\\n')
 
             for call in var_list:
                 if '&' in call:
                     double_code = call.split('&')
                     spaced_call = ' & '.join(code for code in double_code)
                     double_acronym = ' & '.join(name_codes[code] for code in double_code)
-                    output_file.write(spaced_call + ':' + double_acronym + '\n')
+                    output_file.write(spaced_call + ':' + double_acronym + '\\n')
                 else:
-                    output_file.write(call + ':' + name_codes[call] + '\n')
+                    output_file.write(call + ':' + name_codes[call] + '\\n')
 
         for line in vcf:
             # Skipping file header lines
@@ -151,26 +151,26 @@ with open(file) as vcf:
                     output_file = low_file
 
                 # Final printing
-                output_file.write('\n')
-                dash = '-' * len(final) + '\n'
+                output_file.write('\\n')
+                dash = '-' * len(final) + '\\n'
                 output_file.write(dash)
-                output_file.write(final + '\n')
+                output_file.write(final + '\\n')
                 info_header = ' SnpEff Variant Information '
                 half_dash = '-' * (int((len(final) - len(info_header)) / 2))
-                output_file.write(half_dash + info_header + half_dash + '\n' + '\n')
+                output_file.write(half_dash + info_header + half_dash + '\\n' + '\\n')
 
                 # There is different spacing depending on the variant recording, so this handles the difference
                 for _ in range(len(INFO)):
                     for key in info_dict.keys():
                         if INFO[_].split('=')[0] == key:
                             var_stats = INFO[_].split('=')
-                            output_file.write(info_dict[key] + '= ' + var_stats[1] + '\n')
+                            output_file.write(info_dict[key] + '= ' + var_stats[1] + '\\n')
 
-                    output_file.write('\n')
+                    output_file.write('\\n')
 
                     # INDEL variant handler
                     if INFO[_].startswith("INDEL"):
-                        output_file.write('The variant is an INDEL\n\n')
+                        output_file.write('The variant is an INDEL\\n\\n')
 
                     # Annotation processor
                     if INFO[_].startswith("ANN"):
@@ -214,7 +214,7 @@ with open(file) as vcf:
                             chunked_info.append(info[seven_wide:seven_wide + 7])
 
                         # Final printing
-                        output_file.write('Allele : ' + allele + '\n')  # prints the single allele line
+                        output_file.write('Allele : ' + allele + '\\n')  # prints the single allele line
 
                         # Takes each length 7 chunk and transposes the nested info list to align it with
                         # the format column when printing
@@ -225,30 +225,30 @@ with open(file) as vcf:
 
                             for i in concat:
                                 output_file.write(i)
-                                output_file.write('\n')
+                                output_file.write('\\n')
 
-                            output_file.write('\n')
+                            output_file.write('\\n')
 
-                        output_file.write('\n')
+                        output_file.write('\\n')
 
                     # Loss of Function variant handler
                     if INFO[_].startswith('LOF'):
                         # Statement
-                        output_file.write('Predicted loss of function effects for this variant:\n')
+                        output_file.write('Predicted loss of function effects for this variant:\\n')
                         lof_fmt = 'Gene_Name | Gene_ID | Number_of_transcripts_in_gene | ' \
                                   'Percent_of_transcripts_affected'.split(' | ')
 
                         # Lists all the associated stats seen above in lof_fmt
                         for position in range(4):
-                            output_file.write(lof_fmt[position] + ':' + INFO[_][5:-1].split('|')[position] + '\n')
+                            output_file.write(lof_fmt[position] + ':' + INFO[_][5:-1].split('|')[position] + '\\n')
 
                     # Nonsense mediated decay variant handler
                     if INFO[_].startswith('NMD'):
                         # Statement
-                        output_file.write('Predicted nonsense mediated decay effects for this variant:\n')
+                        output_file.write('Predicted nonsense mediated decay effects for this variant:\\n')
                         lof_fmt = 'Gene_Name | Gene_ID | Number_of_transcripts_in_gene | ' \
                                   'Percent_of_transcripts_affected'.split(' | ')
 
                         # Lists all the associated stats seen above in lof_fmt
                         for position in range(4):
-                            output_file.write(lof_fmt[position] + ':' + INFO[_][5:-1].split('|')[position] + '\n')
+                            output_file.write(lof_fmt[position] + ':' + INFO[_][5:-1].split('|')[position] + '\\n')

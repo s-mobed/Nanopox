@@ -254,7 +254,7 @@ process snpann {
     cpus params.threads
 
     // Output Dir
-    publishDir "${params.draft_dir}/${sample_id}", pattern: "*.ann.vcf", mode: "copy"
+    publishDir "${params.calls_dir}/${sample_id}", pattern: "*.ann.vcf", mode: "copy"
 
     // I/O
     input:
@@ -275,7 +275,7 @@ process vcf_parser {
     cpus params.threads
 
     // Output Dir
-    publishDir "${params.draft_dir}/${sample_id}", pattern: "*.txt", mode: "copy"
+    publishDir "${params.calls_dir}/${sample_id}", pattern: "*.txt", mode: "copy"
 
     // I/O
     input:

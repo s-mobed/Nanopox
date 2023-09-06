@@ -8,11 +8,11 @@ This is the repository of my Msc BioInformatics summer project. The goal of this
 
 To install the pipeline, the user would first need to install Nextflow by downloading it directly using this command: 
 
-curl -fsSL https://get.nextflow.io | bash
+                                            curl -fsSL https://get.nextflow.io | bash
 
 It also can be installed through the Bioconda channel:
 
-conda install -c bioconda nextflow
+                                            conda install -c bioconda nextflow
 
 The user would also need to download Docker on their system to fetch the containers needed for the pipeline to execute. As Nextflow has integrated Docker support, there are no further steps needed. This is the list of Docker images used in the pipeline, which can be found in the Nextflow config file:
  
@@ -30,7 +30,7 @@ However, if having the Docker images pre-installed before running the pipeline i
 
 Lastly, the pipeline can be pulled from the Github repository it sits in, using this command:
 
-nextflow pull s-mobed/Nanopox/
+                                            nextflow pull s-mobed/Nanopox/
 
 This command will download the Nextflow script and the configuration file necessary to run the pipeline.
 

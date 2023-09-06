@@ -39,7 +39,7 @@ This command will download the Nextflow script and the configuration file necess
 # Pipeline execution
 To execute the complete pipeline, employ the following command:
 
-                            nextflow run s-mobed/Nanopox --reference reference_genome.fa --fastq ONT_reads.fastq  --primer_scheme primer.scheme.bed –threads [NUM] 
+    nextflow run s-mobed/Nanopox --reference reference_genome.fa --fastq ONT_reads.fastq  --primer_scheme primer.scheme.bed –threads [NUM] 
 
 These flags are essential for proper pipeline execution. Running the command without these flags or solely with the --help flag will display the help message, offering usage details and optional flags. If multiple FASTQ files need processing in a single run (e.g., when files are in a folder named Data), the input flag would be --fastq ‘Data/*.fastq’. The inclusion of quotes is vital for Nextflow to interpret it as a global path matcher.
 

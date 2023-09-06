@@ -46,5 +46,3 @@ These flags are essential for proper pipeline execution. Running the command wit
 The pipeline also integrates an alternative input format within Nextflow. Utilising the --sra flag instead of the --fastq flag, along with the optional --ncbi_key flag, users can extract files from the NCBI SRA database by providing project or accession numbers.
 nextflow run s-mobed/Nanopox --reference reference_genome.fa --sra ‘PRJNA925815’  --primer_scheme primer.scheme.bed --threads [NUM] --ncbi_key ‘0123456789abcdef’. When dealing with multiple SRA IDs, supply them as a list: “['ERR000001', 'ERR000002', 'ERR000003']”.
 
-![image](https://github.com/s-mobed/Nanopox/assets/91598812/e247d209-32ae-4d10-8b4a-cff9bc5550ab)
-

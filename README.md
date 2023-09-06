@@ -59,7 +59,6 @@ The pipeline will only execute mini_sam by default, if users prefer to execute o
 - ngmlr_vc 
 - all
 
-
 # Variant Calling Alternative Method
 
 Variant calling wasn't implemented in the final version of project code, but was implemented shortly afterwards. To use this alternative  pipeline. If you pull the separate branch with this command:
@@ -68,7 +67,7 @@ Variant calling wasn't implemented in the final version of project code, but was
 
 and then you just add the -r flag like this, when running the alternative:
 
-    nextflow run s-mobed/Nanopox -r variant_call --reference reference_genome.fa --fastq 'Data/*.fastq.gz' --primer_scheme primer.scheme.bed --threads 8 --method variant_only
+    nextflow run s-mobed/Nanopox -r variant_call --reference reference_genome.fa --fastq 'Data/*.fastq.gz' --primer_scheme primer.scheme.bed --threads [NUM] --method variant_only
 
 To simplify the pipeline, I removed the NGMLR and Viral consensus tools and now the pipeline only runs the mini_sam combination from before for the alignment and draft consensus calling steps. Therfore, I’ve changed the method flag so there are these methods:
 
@@ -82,3 +81,7 @@ For the variant calling step, I use these docker images, and have been included 
 - staphb/bcftools:1.12
 - smobed/snpeff_mpox:latest
 - smobed/python_mpox:latest
+
+# Acknowledgements
+
+I would like to thank my supervisor Dr. Sreenu Vattipally (https://github.com/vbsreenu) for all the guidance and help throughout my Masters Project. I would like to thank my brother, Dean Mobed (https://www.linkedin.com/in/dean-mobed-75231b198/), for the logo of the pipeline.

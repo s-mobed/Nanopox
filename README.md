@@ -68,7 +68,7 @@ Variant calling wasn't implemented in the final version of project code, but was
 
 and then you just add the -r flag like this, when running the alternative:
 
-    nextflow run s-mobed/Nanopox -r variant_call --reference ../Ref/NC_063383.1.fa --fastq 'Data/*.fastq.gz' --primer_scheme Data/MPX2500primers_v2.bed --threads 8 --method variant_only
+    nextflow run s-mobed/Nanopox -r variant_call --reference reference_genome.fa --fastq 'Data/*.fastq.gz' --primer_scheme primer.scheme.bed --threads 8 --method variant_only
 
 To simplify the pipeline, I removed the NGMLR and Viral consensus tools and now the pipeline only runs the mini_sam combination from before for the alignment and draft consensus calling steps. Therfore, I’ve changed the method flag so there are these methods:
 
